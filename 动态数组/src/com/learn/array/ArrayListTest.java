@@ -1,7 +1,10 @@
-package com.learn;
+package com.learn.array;
+
+import com.learn.ArrayList;
+import com.learn.Person;
 
 public class ArrayListTest {
-    private static final ArrayList<Object> arrayList = new ArrayList<>();
+    private static final com.learn.ArrayList<Object> arrayList = new ArrayList<>();
     public static void main(String[] args) {
         peopleTest();
         //intTest();

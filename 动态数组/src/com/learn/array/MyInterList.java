@@ -1,4 +1,4 @@
-package com.learn;
+package com.learn.array;
 
 public class MyInterList {
     // 自定义int类型list
@@ -126,6 +126,9 @@ public class MyInterList {
         return old;
     }
 
+    public void removeByEle(int element) {
+        remove(indexOf(element));
+    }
     // 获取索引位置元素
     public int get(int index) {
         check4Index(index);

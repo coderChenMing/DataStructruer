@@ -1,9 +1,12 @@
-package com.learn;
+package com.learn.array;
 
 import java.util.Arrays;
 
-public class ArrayList<E> extends AbstractList<E> {
+public class ArrayList<E> {
+    private int size;
     private Object[] elements;
+    private static final int DEFAULT_CAPACITY = 10;
+    private static final int ELEMENT_NOT_FOUND = -1;
 
     public ArrayList() {
         this(DEFAULT_CAPACITY);
@@ -26,8 +29,7 @@ public class ArrayList<E> extends AbstractList<E> {
         Arrays.fill(elements, null);
     }
 
-
-    public int indexOf(E element) {
+    private int indexOf(E element) {
         if (null != element) {
             for (int i = 0; i < size; i++) {
                 if (element.equals(elements[i])) {
@@ -44,9 +46,21 @@ public class ArrayList<E> extends AbstractList<E> {
         return ELEMENT_NOT_FOUND;
     }
 
-
     public boolean contains(E element) {
         return indexOf(element) != ELEMENT_NOT_FOUND;
+    }
+
+
+    public void check4Add(int index) {
+        if (index < 0 || index > size) {
+            throw new IllegalArgumentException("索引参数非法");
+        }
+    }
+
+    public void check4Index(int index) {
+        if (index < 0 || index >= size) {
+            throw new IllegalArgumentException("索引参数非法");
+        }
     }
 
     private void ensureCapacity() {
@@ -90,7 +104,6 @@ public class ArrayList<E> extends AbstractList<E> {
         return old;
     }
 
-    @Override
     public void remove(E element) {
         remove(indexOf(element));
     }

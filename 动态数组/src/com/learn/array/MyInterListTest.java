@@ -1,4 +1,4 @@
-package com.learn;
+package com.learn.array;
 
 public class MyInterListTest {
     public static void main(String[] args) {
