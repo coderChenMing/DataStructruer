@@ -14,7 +14,7 @@ package com.learn.array;
 public class MyIntArrayList {
 
     public static final int DEFAULT_CAPACITY = 10;
-    public static final int NOT_FOUND = -1;
+    public static final int ELEMENT_NOT_FOUND = -1;
     // 分析可变数组成员变量,首先需要一个放数据的数组
     // 存放数据的数组
     private int[] elements;
@@ -33,13 +33,23 @@ public class MyIntArrayList {
     }
 
     public boolean contains(int element) {
+        return ELEMENT_NOT_FOUND != indexOf(element);
+    }
+
+    /**
+     * 定位元素在数组中的索引位置
+     */
+    public int indexOf(int element) {
+        //注意:size:实际元素个数,elements.length:数组空间大小
         for (int i = 0; i < size; i++) {
-            if (elements[i] == element) {
-                return true;
+            if (element == elements[i]) {
+                return i;
             }
         }
-        return false;
+        // -1表示没有找到
+        return ELEMENT_NOT_FOUND;
     }
+
 
     public int get(int index) {
         checkIndexNotContainSize(index);
@@ -64,6 +74,9 @@ public class MyIntArrayList {
         }*/
         // size =6 index=2 i可以取到6,5,4,3
         checkIndexContainSize(index);
+        // 扩容问题
+
+
         for (int i = size; i > index; i--) {
             elements[i] = elements[i - 1];
             // 5的数据交给6 ,4的数据交给5，一直到2的数据交给3
@@ -82,11 +95,12 @@ public class MyIntArrayList {
     public int remove(int index) {
         // 删除元素
         // 11 22 33 44 55 66 删除index=2处数据
+        // 11 22 44 55 66
         // 删除操作不用做 44覆盖33,55覆盖44,66覆盖55
         checkIndexNotContainSize(index);
         int oldEle = elements[index];
         for (int i = index; i < size; i++) {
-            elements[index] = elements[index + 1];
+            elements[i] = elements[i + 1];
             // index 3赋值给index 2,index 4赋值给3。。。index size-1 赋值给index size-2
         }
         size --;

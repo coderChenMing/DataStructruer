@@ -29,7 +29,7 @@ public class FibDemo {
      * 递归调用:第n个数= 第n-1 +第 n -2
      */
     public static int fib1(int n) {
-        if (n < 1) {
+        if (n < 2) {
             return n;
         }
         return fib1(n - 1) + fib1(n - 2);

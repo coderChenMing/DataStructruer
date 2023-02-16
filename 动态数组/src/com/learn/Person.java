@@ -52,7 +52,7 @@ public class Person {
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
-        System.out.println("销毁person了");
+        System.out.println("销毁person"+getName()+"了");
 
     }
 
