@@ -60,6 +60,8 @@ public class SingleLinkedList<E> extends AbstractList<E> {
 
     @Override
     public int indexOf(E element) {
+        /*
+        // 也可以正常获取，就是性能比下面的低
         for (int i = 0; i < size; i++) {
             if (null != element) {
                 if (element.equals(node(i).element)) {
@@ -69,6 +71,23 @@ public class SingleLinkedList<E> extends AbstractList<E> {
                 if (null == node(i).element) {
                     return i;
                 }
+            }
+        }*/
+
+        Node<E> node = first;
+        if (null == element) {
+            for (int i = 0; i < size; i++) {
+                if (node.element == null) {
+                    return i;
+                }
+                node = node.next;
+            }
+        } else {
+            for (int i = 0; i < size; i++) {
+                if (element.equals(node.element)) {
+                    return i;
+                }
+                node = node.next;
             }
         }
         return ELEMENT_NOT_FOUND;
@@ -90,17 +109,15 @@ public class SingleLinkedList<E> extends AbstractList<E> {
     @Override
     public void add(int index, E element) {
         check4Add(index);
-        Node<E> node = first;
         if (index == 0) {
             // 添加为第一个节点,first指向新节点
             first = new Node<>(element, first);
         } else {
             // 对于链表 0 1 2 3 4  -> 0 1 5 2 3 4
             // 必须先获取添加节点的前一个节点才能完成添加操作
-            node = node(index - 1);
+            Node<E> node = node(index - 1);
             // 新节点
-            Node<E> newNode = new Node<>(element, node.next);
-            node.next = newNode;
+            node.next = new Node<>(element, node.next);
         }
         size++;
     }
@@ -115,18 +132,17 @@ public class SingleLinkedList<E> extends AbstractList<E> {
         check4Index(index);
         // 获取第一个节点
         Node<E> node = first;
-        Node<E> oldNode = node;
         if (index == 0) {
             first = node.next;
         } else {
             // 0 1 2 3 4 -> 0 2 3 4
             // 获取要删除节点的前一个节点
-            node = node(index - 1);
-            oldNode = node.next;
-            node.next = oldNode.next;
+            Node<E> prev = node(index - 1);
+            node = prev.next;
+            prev.next = node.next;
         }
         size--;
-        return oldNode.element;
+        return node.element;
     }
 
     @Override
