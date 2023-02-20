@@ -38,24 +38,9 @@ public class SingleLinkedList<E> extends AbstractList<E> {
     }
 
     @Override
-    public int size() {
-        return size;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
-    @Override
     public void clear() {
         size = 0;
         first = null;// 头节点指向Null，后面的对象自动被回收
-    }
-
-    @Override
-    public boolean contains(E element) {
-        return indexOf(element) != ELEMENT_NOT_FOUND;
     }
 
     @Override
@@ -120,11 +105,6 @@ public class SingleLinkedList<E> extends AbstractList<E> {
             node.next = new Node<>(element, node.next);
         }
         size++;
-    }
-
-    @Override
-    public void add(E element) {
-        add(size, element);
     }
 
     @Override
