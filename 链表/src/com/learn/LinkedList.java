@@ -143,6 +143,7 @@ public class LinkedList<E> extends AbstractList<E> {
 
     public static void main(String[] args) {
         List<Integer> list = new LinkedList<>();
+        // list.remove(0); // 上来就删除index=size 不能通过索引校验
         list.add(10);
         list.add(11);
         list.add(12);

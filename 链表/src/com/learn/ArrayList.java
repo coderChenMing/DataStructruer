@@ -13,14 +13,6 @@ public class ArrayList<E> extends AbstractList<E> {
         elements = new Object[Math.max(capacity, DEFAULT_CAPACITY)];
     }
 
-    public int size() {
-        return size;
-    }
-
-    public boolean isEmpty() {
-        return size == 0;
-    }
-
     public void clear() {
         size = 0;
         Arrays.fill(elements, null);
@@ -42,11 +34,6 @@ public class ArrayList<E> extends AbstractList<E> {
             }
         }
         return ELEMENT_NOT_FOUND;
-    }
-
-
-    public boolean contains(E element) {
-        return indexOf(element) != ELEMENT_NOT_FOUND;
     }
 
     private void ensureCapacity() {
@@ -76,17 +63,15 @@ public class ArrayList<E> extends AbstractList<E> {
         size++;
     }
 
-    public void add(E element) {
-        add(size, element);
-    }
-
     public E remove(int index) {
         check4Index(index);
         E old = (E) elements[index];
         for (int i = index + 1; i < size; i++) {
             elements[i - 1] = elements[i];
         }
-        size--;
+        //size--;
+        // 优化:最后一个元素需要清空
+        elements[--size] = null;
         return old;
     }
 
@@ -113,11 +98,10 @@ public class ArrayList<E> extends AbstractList<E> {
         StringBuilder sb = new StringBuilder();
         sb.append("size = [ ");
         for (int i = 0; i < size; i++) {
-            if (i == 0) {
-                sb.append(elements[i]);
-            } else {
-                sb.append(" , ").append(elements[i]);
+            if (i != 0) {
+                sb.append(" , ");
             }
+            sb.append(elements[i]);
         }
         return sb.append(" ]").toString();
     }
