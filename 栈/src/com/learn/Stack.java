@@ -31,4 +31,9 @@ public class Stack<E> {
     public E top() {
         return list.get(list.size()-1);
     }
+
+    @Override
+    public String toString() {
+        return list.toString();
+    }
 }
