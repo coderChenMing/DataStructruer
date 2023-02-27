@@ -1,4 +1,4 @@
-package com.learn.list;
+package com.learn.stack.list;
 
 public interface List<E> {
 	static final int ELEMENT_NOT_FOUND = -1;

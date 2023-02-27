@@ -1,4 +1,4 @@
-package com.learn.list;
+package com.learn.stack.list;
 
 public abstract class AbstractList<E> implements List<E>  {
 	/**

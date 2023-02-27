@@ -1,7 +1,7 @@
 package com.learn;
 
-import com.learn.list.ArrayList;
-import com.learn.list.List;
+import com.learn.stack.list.ArrayList;
+import com.learn.stack.list.List;
 /**
  * 栈特点:first in last out
  * 应用:浏览器网址前进后退

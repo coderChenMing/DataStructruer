@@ -18,7 +18,7 @@ pycache
 svn
 logs
 target
-out
+*out
 vssver.scc
 vssver2.scc
 *.txt

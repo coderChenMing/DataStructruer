@@ -1,4 +1,4 @@
-package com.learn.list;
+package com.learn.stack.list;
 
 @SuppressWarnings("unchecked")
 public class ArrayList<E> extends AbstractList<E> {

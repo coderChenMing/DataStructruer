@@ -1,6 +1,6 @@
 package com.learn;
 
-import com.learn.list.Person;
+import com.learn.stack.list.Person;
 
 /**
  * 用数组的方式实现一个栈

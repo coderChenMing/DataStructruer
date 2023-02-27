@@ -1,4 +1,4 @@
-package com.learn.list;
+package com.learn.stack.list;
 
 public class LinkedList<E> extends AbstractList<E> {
 	private Node<E> first;

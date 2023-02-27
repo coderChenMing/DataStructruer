@@ -34,6 +34,7 @@ public class BinarySearchTree<E extends Comparable<E>> implements BinaryTreeInfo
         Node<E> node = root;
         int result = 0;
         while (node != null) {
+            // 当 node == null ,退出循环,需要找到叶子节点并作为新节点的父节点，使用parent记录原叶子节点
             result = this.compare(element, node.element);
             parent = node;
             if (result > 0) {
@@ -94,6 +95,9 @@ public class BinarySearchTree<E extends Comparable<E>> implements BinaryTreeInfo
         private Node<E> left;
         private Node<E> right;
 
+        /**
+         * 除了根节点，任意节点的parent一定非空,而左右节点有可能是空的，比较适合提供如下实例方法
+         */
         public Node(E element, Node<E> parent) {
             this.element = element;
             this.parent = parent;

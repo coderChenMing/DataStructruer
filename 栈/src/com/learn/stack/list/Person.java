@@ -1,4 +1,4 @@
-package com.learn.list;
+package com.learn.stack.list;
 
 import java.util.Objects;
 
