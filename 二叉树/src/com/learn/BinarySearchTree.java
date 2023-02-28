@@ -292,6 +292,57 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
         }
     }
 
+    /**
+     * 计算二叉树的高度:即计算根节点的高度
+     */
+    public int height() {
+        return height(root);
+    }
+
+    /**
+     * 递归方式计算树的高度
+     */
+    private int height(Node<E> node) {
+        //归纳:任意节点高度=Math.max(node.left,node.right)+1
+        // 当node为叶子节点时,node.left,node.right 为Null,需要处理
+        if (node == null) return 0;
+        return 1 + Math.max(height(node.left), height(node.right));
+    }
+
+    /**
+     * 迭代方式计算树的高度
+     * 层序遍历计算树的高度
+     * 归纳:每一层完成出队,高度++
+     */
+    public int height2() {
+        if (root == null) return 0;
+        Node<E> node = root;
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(node);
+        int height = 0;
+        // int levelSize = 1;
+        int levelSize = queue.size(); //根节点所在的第一层,就一个节点,两种写法都行
+        while (!queue.isEmpty()) {
+            node = queue.poll();
+            levelSize--;// 对于根节点所在的第一层,就一个根节点,出队后为零,而从第二层开始,需要每一层全部出队才能置零
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+
+            if (levelSize == 0) {
+                // 当每层全部出队后,重置levelSize,同时height++
+                levelSize = queue.size();
+                height++;
+            }
+
+        }
+        return height;
+    }
+
     // 根据四种遍历实现 toString打印
     @Override
     public String toString() {

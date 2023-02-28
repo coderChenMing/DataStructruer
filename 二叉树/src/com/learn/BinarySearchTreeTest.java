@@ -24,12 +24,12 @@ public class BinarySearchTreeTest {
     };
 
     public static void main(String[] args) {
-        // test1();
+        test1();
         // test2();
         // test3();
         // test4();
         // test5();
-        test6();
+        // test6();
         //test7();
     }
 
@@ -39,8 +39,11 @@ public class BinarySearchTreeTest {
         for (int i = 0; i < data.length; i++) {
             bst.add(data[i]);
         }
-        //System.out.println(bst.size());
+        // bst.add(1); 查看只有一个根节点的二叉树
+        // System.out.println(bst.size());
         BinaryTrees.println(bst);
+        System.out.println("递归计算树高: " + bst.height());
+        System.out.println("迭代计算树高: " + bst.height2());
     }
 
     public static void test2() {
