@@ -182,24 +182,187 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
         }
     }
 
-    // toString
+    /**
+     * 遍历增强
+     * 以上四种遍历,执行的都是sout打印，对于调用方来说，有时候需要定制化打印，那么如何实现呢？
+     * 方法增加接口/抽象类，完成功能扩展
+     */
+    public static abstract class Visitor<E> {
+        boolean stop;
 
+        abstract boolean visit(E element);
+    }
+
+    /**
+     * 前序遍历增强
+     */
+    public void preorderTraversalExt(Visitor<E> visitor) {
+        if (null == visitor) {
+            // 如果你没有传，我就全部遍历打印
+            preorderTraversal();
+            return;
+        }
+        // 传了visitor,我就根据实现进行操作
+        this.preorderTraversalExt(root, visitor);
+    }
+
+    private void preorderTraversalExt(Node<E> node, Visitor<E> visitor) {
+        if (node == null || visitor.stop) {
+            return;
+        }
+        visitor.stop = visitor.visit(node.element);
+        preorderTraversalExt(node.left, visitor);
+        preorderTraversalExt(node.right, visitor);
+
+    }
+
+    /**
+     * 中序遍历增强
+     */
+    public void inorderTraversalExt(Visitor<E> visitor) {
+        if (null == visitor) {
+            // 如果你没有传，我就全部遍历打印
+            inorderTraversal();
+            return;
+        }
+        // 传了visitor,我就根据实现进行操作
+        this.inorderTraversalExt(root, visitor);
+    }
+
+    private void inorderTraversalExt(Node<E> node, Visitor<E> visitor) {
+        if (node == null || visitor.stop) {
+            return;
+        }
+        inorderTraversalExt(node.left, visitor);
+        if (visitor.stop) {
+            return;
+        }
+        visitor.stop = visitor.visit(node.element);
+        inorderTraversalExt(node.right, visitor);
+
+    }
+
+    /**
+     * 后序遍历增强
+     */
+    public void postorderTraversalExt(Visitor<E> visitor) {
+        if (null == visitor) {
+            // 如果你没有传，我就全部遍历打印
+            postorderTraversal();
+            return;
+        }
+        // 传了visitor,我就根据实现进行操作
+        this.postorderTraversalExt(root, visitor);
+    }
+
+    private void postorderTraversalExt(Node<E> node, Visitor<E> visitor) {
+        if (node == null || visitor.stop) {
+            return;
+        }
+        postorderTraversalExt(node.left, visitor);
+        postorderTraversalExt(node.right, visitor);
+        if (visitor.stop) {
+            return;
+        }
+        visitor.stop = visitor.visit(node.element);
+    }
+
+    /**
+     * 层序遍历增强
+     */
+    public void levelOrderTraversalExt(Visitor<E> visitor) {
+        if (null == visitor) {
+            levelOrderTraversal();
+            return;
+        }
+        Node<E> node = root;
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(node);
+        while (!queue.isEmpty()) {
+            node = queue.poll();
+            if (visitor.visit(node.element)) return;
+            // 从左向右，先向队尾加左
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+            // 从左向右，后向队尾加右节点
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+        }
+    }
+
+    // 根据四种遍历实现 toString打印
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        preorderTraversalToString(root, sb);
+        //preorderTraversalToString(root, sb,"");
+        //inorderTraversalToString(root, sb,"");
+        //postorderTraversalToString(root, sb, "");
+        levelOrderTraversalToString(root, sb, "");
         return sb.toString();
     }
 
-    private void preorderTraversalToString(Node<E> node, StringBuilder sb) {
+    /**
+     * 前序遍历打印
+     */
+    private void preorderTraversalToString(Node<E> node, StringBuilder sb, String prefix) {
         if (node == null) {
             return;
         }
-        sb.append(node.element);
-        preorderTraversalToString(node.left, sb);
-        preorderTraversalToString(node.right, sb);
+        //sb.append(node.element).append("\n");
+        // 增加前缀进行区别
+        sb.append(prefix).append(node.element).append("\n");
+        preorderTraversalToString(node.left, sb, prefix + "L____");
+        preorderTraversalToString(node.right, sb, prefix + "R____");
     }
 
+    /**
+     * 中序遍历打印
+     */
+    private void inorderTraversalToString(Node<E> node, StringBuilder sb, String prefix) {
+        if (node == null) {
+            return;
+        }
+        inorderTraversalToString(node.left, sb, prefix + "L__");
+        sb.append(prefix).append(node.element).append("\n");
+        inorderTraversalToString(node.right, sb, prefix + "R__");
+    }
+
+    /**
+     * 后序遍历打印
+     */
+    private void postorderTraversalToString(Node<E> node, StringBuilder sb, String prefix) {
+        if (node == null) {
+            return;
+        }
+        postorderTraversalToString(node.left, sb, prefix + "L__");
+        postorderTraversalToString(node.right, sb, prefix + "R__");
+        sb.append(prefix).append(node.element).append("\n");
+    }
+
+    /**
+     * 层序遍历打印
+     */
+    private void levelOrderTraversalToString(Node<E> node, StringBuilder sb, String prefix) {
+        if (null == node) {
+            return;
+        }
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(node);
+        while (!queue.isEmpty()) {
+            node = queue.poll();
+            sb.append(prefix).append(node.element).append("\n");
+            if (null != node.left) {
+                queue.offer(node.left);
+                prefix += "L__";
+            }
+            if (null != node.right) {
+                queue.offer(node.right);
+                prefix += "R__";
+            }
+        }
+    }
 
     // 工具类打印器的使用
     @Override

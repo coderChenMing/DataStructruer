@@ -1,11 +1,12 @@
 package com.learn;
 
+import com.learn.BinarySearchTree.Visitor;
 import com.learn.printer.BinaryTrees;
 
 public class BinarySearchTreeTest {
 
     private static Integer data[] = new Integer[]{
-            7, 4, 9, 2, 5, 8, 11,10, 3, 12, 1
+            7, 4, 9, 2, 5, 8, 11, 10, 3, 12, 1
     };
 
     private static Person[] people = {
@@ -27,7 +28,9 @@ public class BinarySearchTreeTest {
         // test2();
         // test3();
         // test4();
-        test5();
+        // test5();
+        test6();
+        //test7();
     }
 
     public static void test1() {
@@ -70,10 +73,10 @@ public class BinarySearchTreeTest {
         for (int i = 0; i < data.length; i++) {
             bst.add(data[i]);
         }
-        //bst.preorderTraversal();
+        bst.preorderTraversal();
         //bst.inorderTraversal();
         //bst.postorderTraversal();
-        bst.levelOrderTraversal();
+        //bst.levelOrderTraversal();
     }
 
     public static void test5() {
@@ -83,5 +86,85 @@ public class BinarySearchTreeTest {
             bst.add(data[i]);
         }
         System.out.println(bst);
+    }
+
+    public static void test6() {
+        // 测试visitor接口
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        for (int i = 0; i < data.length; i++) {
+            bst.add(data[i]);
+        }
+        bst.preorderTraversalExt(new Visitor<Integer>() {
+            @Override
+            boolean visit(Integer element) {
+                System.out.print(element + " ");
+                return false;
+            }
+        });
+        System.out.println();
+        bst.inorderTraversalExt(new Visitor<Integer>() {
+            @Override
+            boolean visit(Integer element) {
+                System.out.print(element + " ");
+                return false;
+            }
+        });
+        System.out.println();
+        bst.postorderTraversalExt(new Visitor<Integer>() {
+            @Override
+            boolean visit(Integer element) {
+                System.out.print(element + " ");
+                return false;
+            }
+        });
+        System.out.println();
+        bst.levelOrderTraversalExt(new Visitor<Integer>() {
+            @Override
+            boolean visit(Integer element) {
+                System.out.print(element + " ");
+                return false;
+            }
+        });
+        System.out.println();
+        bst.levelOrderTraversalExt(null);
+    }
+
+    public static void test7() {
+        // 测试循环等于具体值中断后续打印
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        for (int i = 0; i < data.length; i++) {
+            bst.add(data[i]);
+        }
+        bst.preorderTraversalExt(new Visitor<Integer>() {
+            @Override
+            boolean visit(Integer element) {
+                System.out.print(element + " ");
+                return 2 == element;
+            }
+        });
+        System.out.println();
+        bst.inorderTraversalExt(new Visitor<Integer>() {
+            @Override
+            boolean visit(Integer element) {
+                System.out.print(element + " ");
+                return 4 == element;
+            }
+        });
+        System.out.println();
+        bst.postorderTraversalExt(new Visitor<Integer>() {
+            @Override
+            boolean visit(Integer element) {
+                System.out.print(element + " ");
+                return 8 == element;
+            }
+        });
+        System.out.println();
+        bst.levelOrderTraversalExt(new Visitor<Integer>() {
+            @Override
+            boolean visit(Integer element) {
+                System.out.print(element + " ");
+                return 10 == element;
+            }
+        });
     }
 }
