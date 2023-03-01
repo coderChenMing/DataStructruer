@@ -375,6 +375,20 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
+     * 获取任意一个节点的前驱节点
+     */
+    public Node<E> precursorNode() {
+        return null;
+    }
+
+    /**
+     * 获取任意一个节点的后继节点
+     */
+    public void successorNode() {
+
+    }
+
+    /**
      * 根据四种遍历实现 toString打印
      */
     @Override
