@@ -301,11 +301,11 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 计算二叉树任一节点的高度
+     * 计算 二叉树 任一 节点的高度
      * 使用递归实现：画图归纳,任意节点高度=Math.max(左子节点高度，右子节点高度)+1
      */
     private int height(Node<E> node) {
-        // 一致向左递归或者向右递归，最后到达叶子节点的左右节点,不存在，返回0
+        // 一致向左递归或者向右递归，最后到达叶子节点的左右节点 ,不存在，返回0
         if (node == null) return 0;
         return 1 + Math.max(height(node.left), height(node.right));
     }
@@ -340,6 +340,39 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
         return height;
     }
 
+    /**
+     * 判断一颗 二叉树 是否是 完全二叉树
+     * 完全二叉树:节点的度可能是0,1,2 ，如果有度为1的节点只能有一个，且向左靠齐
+     * 需要遍历整个二叉树的每个节点,根据左右子节点是否为空进行区分
+     */
+    public boolean isComplete() {
+        if (root == null) return false;
+        // 层序遍历方式判断是否完全二叉树
+        Node<E> node = root;
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(node);
+        boolean isLeaf = false;
+        while (!queue.isEmpty()) {
+            node = queue.poll();
+            if (isLeaf && !node.isLeaf()) {
+                return false;
+            }
+            if (node.left != null) {
+                queue.offer(node.left);
+            } else if (node.right != null) {
+                // 一个节点，左子节点为空,右子节点不为空，一定不是完全二叉树
+                return false;
+            }
+            if (node.right != null) {
+                queue.offer(node.right);
+            } else {
+                // 当前出队节点的左子节点可能为空也可能不空,右子节点为空
+                // 无论左子节点是否为空,只有保证之后出队的节点都是叶子节点才能是 完全二叉树
+                isLeaf = true;
+            }
+        }
+        return true;
+    }
 
     /**
      * 根据四种遍历实现 toString打印
@@ -452,6 +485,14 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
         public Node(E element, Node<E> parent) {
             this.element = element;
             this.parent = parent;
+        }
+
+        public boolean isLeaf() {
+            return left == null && right == null;
+        }
+
+        public boolean hasTwoChild() {
+            return left != null && right != null;
         }
     }
 }

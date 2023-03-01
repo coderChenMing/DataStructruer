@@ -31,7 +31,8 @@ public class BinarySearchTreeTest {
         // test5();
         // test6();
         // test7();
-        test8();
+        // test8();
+         test9();
     }
 
     public static void test1() {
@@ -179,5 +180,29 @@ public class BinarySearchTreeTest {
         System.out.println();
         System.out.println("递归计算树高: " + bst.height());
         System.out.println("层序遍历计算树高: " + bst.height2());
+    }
+
+    public static void test9() {
+        // 测试一颗 二叉树 是否是 完全二叉树
+        // 测试的关键就是多试些比较特殊的数据
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        bst.add(7);
+        bst.add(4);
+        bst.add(2);
+        bst.add(1);
+        BinaryTrees.println(bst);
+        System.out.println("isComplete: "+bst.isComplete());
+
+        BinarySearchTree<Integer> bst2 = new BinarySearchTree<>();
+        bst2.add(7);
+        bst2.add(9);
+        bst2.add(8);
+        bst2.add(10);
+        bst2.add(4);
+        //bst2.add(6); //是否注释结果不同
+        bst2.add(2);
+        bst2.add(1);
+        BinaryTrees.println(bst2);
+        System.out.println("isComplete: "+bst2.isComplete());
     }
 }
