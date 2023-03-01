@@ -375,17 +375,60 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 获取任意一个节点的前驱节点
+     * 对于中序遍历的二叉树获取任意一个节点的前驱节点
+     * 测试数据
+     * 向 二叉树依次添加 8 4 13 2 6 10 1 3 5 7 9 12 11
      */
-    public Node<E> precursorNode() {
-        return null;
+    public Node<E> precursorNode(Node<E> node) {
+        if (node == null) return null;
+        Node<E> left = node.left;
+        if (left != null) {
+            while (left.right != null) {
+                left = left.right;
+            }
+            return left;
+        }
+        // 三种情况:
+        // 对于二叉树 8 4 13 2 6 10 1 3 5 7 9 12 11
+        // 1.前驱节点为null,也可以视为没有节点.right=node.parent 比如1
+        // 2.前驱节点为node.parent 比如3 7
+        // 3.前驱结点.right=node.parent.parent... 比如9
+        // 既然是多次.parent,可以使用while循环
+        // 终止条件:node在parent的右子树中
+        while (node.parent != null && node == node.parent.left) {
+            node = node.parent;
+        }
+        return node.parent;
     }
+
+
+    /**
+     * 根据元素返回节点
+     */
+    public Node<E> node(E element) {
+        Node<E> node = root;
+        while (node != null) {
+            int result = this.compare(element, node.element);
+            if (result == 0) {
+                return node;
+            } else if (result > 0) {
+                node = node.right;
+            } else {
+                node = node.left;
+            }
+        }
+        return node;
+    }
+
 
     /**
      * 获取任意一个节点的后继节点
+     * 测试数据
+     * 向 二叉树依次添加 4 1 8 2 7 10 3 5 9  11
      */
-    public void successorNode() {
+    public Node<E> successorNode(Node<E> node) {
 
+        return null;
     }
 
     /**
@@ -487,11 +530,11 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
         return " parent_" + parent + " > ele_"+ newNode.element;*/
     }
 
-    private static class Node<E> {
-        private E element;
-        private Node<E> parent;
-        private Node<E> left;
-        private Node<E> right;
+    public static class Node<E> {
+        E element;
+        Node<E> parent;
+        Node<E> left;
+        Node<E> right;
 
         /**
          * 除了根节点，任意节点的parent一定非空,而左右节点有可能是空的，比较适合提供如下实例方法

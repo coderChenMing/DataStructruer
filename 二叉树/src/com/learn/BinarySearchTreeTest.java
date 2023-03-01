@@ -32,7 +32,8 @@ public class BinarySearchTreeTest {
         // test6();
         // test7();
         // test8();
-         test9();
+        // test9();
+         test10();
     }
 
     public static void test1() {
@@ -204,5 +205,49 @@ public class BinarySearchTreeTest {
         bst2.add(1);
         BinaryTrees.println(bst2);
         System.out.println("isComplete: "+bst2.isComplete());
+    }
+
+    public static void test10() {
+        // 测试获取前驱结点
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        bst.add(8);
+        bst.add(4);
+        bst.add(13);
+        bst.add(2);
+        bst.add(6);
+        bst.add(10);
+        bst.add(1);
+        bst.add(3);
+        bst.add(5);
+        bst.add(7);
+        bst.add(9);
+        bst.add(12);
+        bst.add(11);
+
+        BinaryTrees.println(bst);
+
+        System.out.println("1的前驱节点: "+bst.precursorNode(bst.node(1)));
+        System.out.println("3的前驱节点: "+bst.precursorNode(bst.node(3)).element);
+        System.out.println("9的前驱节点: "+bst.precursorNode(bst.node(9)).element);
+    }
+
+    public static void test11() {
+        // 测试获取后继结点
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        bst.add(4);
+        bst.add(1);
+        bst.add(8);
+        bst.add(2);
+        bst.add(7);
+        bst.add(10);
+        bst.add(3);
+        bst.add(5);
+        bst.add(9);
+        bst.add(11);
+        BinaryTrees.println(bst);
+
+        System.out.println("1的后继节点: "+bst.precursorNode(bst.node(1)));
+        System.out.println("3的后继节点: "+bst.precursorNode(bst.node(3)).element);
+        System.out.println("9的后继节点: "+bst.precursorNode(bst.node(9)).element);
     }
 }
