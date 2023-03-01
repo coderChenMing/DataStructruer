@@ -342,8 +342,8 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 
     /**
      * 判断一颗 二叉树 是否是 完全二叉树
-     * 完全二叉树:节点的度可能是0,1,2 ，如果有度为1的节点只能有一个，且向左靠齐
-     * 需要遍历整个二叉树的每个节点,根据左右子节点是否为空进行区分
+     * 完全二叉树 :节点的度可能是0,1,2 ，如果有度为1的节点只能有一个，且向左靠齐
+     * 需要遍历整个 二叉树 的每个节点,根据左右子节点是否为空进行区分
      */
     public boolean isComplete() {
         if (root == null) return false;
