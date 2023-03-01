@@ -292,7 +292,58 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
         }
     }
 
-    // 根据四种遍历实现 toString打印
+    /**
+     * 计算二叉树的高度
+     */
+    public int height() {
+        if (root == null) return 0;
+        return height(root);
+    }
+
+    /**
+     * 计算二叉树任一节点的高度
+     * 使用递归实现：画图归纳,任意节点高度=Math.max(左子节点高度，右子节点高度)+1
+     */
+    private int height(Node<E> node) {
+        // 一致向左递归或者向右递归，最后到达叶子节点的左右节点,不存在，返回0
+        if (node == null) return 0;
+        return 1 + Math.max(height(node.left), height(node.right));
+    }
+
+
+    /**
+     * 层序遍历计算树高
+     * 归纳: 初始height=0,每一层完成出队,height++,关键在于每一层节点全部出队，下一层的levelSize=queue.size()
+     */
+    public int height2() {
+        //从根节点开始层序遍历
+        Node<E> node = root;
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(node);
+        int height = 0;//记录树高
+        int levelSize = 1;// 记录每一层节点个数,根节点所在第一层LevelSize=1
+        while (!queue.isEmpty()) {
+            node = queue.poll();
+            levelSize--;
+            // 左右节点全部入队
+            if (node.left != null) {
+                queue.offer(node.left);
+            }
+            if (node.right != null) {
+                queue.offer(node.right);
+            }
+            if (levelSize == 0) {
+                levelSize = queue.size();
+                height++;
+            }
+        }
+        return height;
+    }
+
+
+    /**
+     * 根据四种遍历实现 toString打印
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

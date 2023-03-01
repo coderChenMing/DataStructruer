@@ -29,8 +29,9 @@ public class BinarySearchTreeTest {
         // test3();
         // test4();
         // test5();
-        test6();
-        //test7();
+        // test6();
+        // test7();
+        test8();
     }
 
     public static void test1() {
@@ -166,5 +167,17 @@ public class BinarySearchTreeTest {
                 return 10 == element;
             }
         });
+    }
+
+    public static void test8() {
+        // 计算树高
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        for (int i = 0; i <30 ; i++) {
+            bst.add((int)(Math.random()*100));
+        }
+        BinaryTrees.print(bst);
+        System.out.println();
+        System.out.println("递归计算树高: " + bst.height());
+        System.out.println("层序遍历计算树高: " + bst.height2());
     }
 }
