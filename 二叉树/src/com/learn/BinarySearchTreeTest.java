@@ -7,7 +7,7 @@ import com.learn.printer.BinaryTrees;
 public class BinarySearchTreeTest {
 
     private static Integer data[] = new Integer[]{
-            7, 4, 9, 2, 5, 8, 11, 10, 3, 12, 1
+            7, 4, 9, 2, 5, 8, 11, 3, 12, 1
     };
 
     private static Person[] people = {
@@ -35,7 +35,9 @@ public class BinarySearchTreeTest {
         // test8();
         // test9();
         // test10();
-        test11();
+        // test11();
+        // test12();
+        test13();
     }
 
     public static void test1() {
@@ -45,7 +47,8 @@ public class BinarySearchTreeTest {
             bst.add(data[i]);
         }
         //System.out.println(bst.size());
-        BinaryTrees.println(bst);
+        //BinaryTrees.println(bst);
+        Files.writeToFile("E:\\remove.txt",BinaryTrees.printString(bst));
     }
 
     public static void test2() {
@@ -254,5 +257,32 @@ public class BinarySearchTreeTest {
         System.out.println("3的后继节点: "+bst.successorNode(bst.node(3)).element);
         System.out.println("8的后继节点: "+bst.successorNode(bst.node(8)).element);
         System.out.println("9的后继节点: "+bst.successorNode(bst.node(9)).element);
+    }
+
+    public static void test12() {
+        // 测试删除节点
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        for (int i = 0; i < data.length; i++) {
+            bst.add(data[i]);
+        }
+        System.out.println(BinaryTrees.printString(bst));
+        bst.remove(12);
+        System.out.println(BinaryTrees.printString(bst));
+        bst.remove(7);
+        System.out.println(BinaryTrees.printString(bst));
+        bst.remove(4);
+        System.out.println(BinaryTrees.printString(bst));
+
+    }
+    public static void test13() {
+        // 测试删除节点2
+        BinarySearchTree<Integer> bst = new BinarySearchTree<>();
+        bst.add(1);
+        //bst.add(2);
+        //bst.add(3);
+        System.out.println(BinaryTrees.printString(bst));
+        bst.remove(1);
+        System.out.println(BinaryTrees.printString(bst));
+
     }
 }

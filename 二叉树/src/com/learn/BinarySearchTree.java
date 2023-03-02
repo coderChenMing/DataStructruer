@@ -7,12 +7,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * 二叉搜索树:
- * 任意节点的左子树所有节点值小于当前节点值，右子树所有节点值大于当前节点值
- * <p>
- * 节点必须是可以比较的（直接实现Comparable接口,或者自定义比较器内容，如果是引用对象，引用对象要入二叉树的属性符合前面两种情况）
- * <p>
- * 应用：可以思考下，mysql数据库按照某个字段进行排序查询的过程
+ * <p> 二叉搜索树:
+ * <p> 任意节点的左子树所有节点值小于当前节点值，右子树所有节点值大于当前节点值
+ * <p> 节点必须是可以比较的（直接实现Comparable接口,或者自定义比较器内容，如果是引用对象，引用对象要入二叉树的属性符合前面两种情况）
+ * <p> 应用：可以思考下，mysql数据库按照某个字段进行排序查询的过程
  */
 public class BinarySearchTree<E> implements BinaryTreeInfo {
     //public class BinarySearchTree<E extends Comparable<E>> implements BinaryTreeInfo {
@@ -39,12 +37,24 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
         return size == 0;
     }
 
+    /**
+     * 清空二叉树
+     */
     public void clear() {
         root = null;
         size = 0;
     }
 
-    // 添加元素
+    /**
+     * <p>判断二叉树中是否存在某个元素
+     */
+    public boolean contains(E element) {
+        return null != node(element);
+    }
+
+    /**
+     * <p>添加元素
+     */
     public void add(E element) {
         checkElement(element);
         // 添加根节点
@@ -80,9 +90,9 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 比较逻辑 : result >0 :e1> e2;
-     * result=0 :e1=e2
-     * result<0 : e1<e2
+     * <p>比较逻辑 : result >0 :e1> e2;
+     * <p>result=0 :e1=e2
+     * <p>result<0 : e1<e2
      */
     private int compare(E e1, E e2) {
         if (null != comparator) {
@@ -101,10 +111,10 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     // 不局限于二叉搜索树，适用于所有二叉树
 
     /**
-     * 前序遍历
-     * 前序遍历:先遍历根节点，再遍历左子树，再遍历右子树
-     * 对于左子树：先遍历左子树根节点，再遍历左子树的左子树，再遍历左子树的右子树。。。。
-     * 建议画图走流程
+     * <p>前序遍历
+     * <p>前序遍历:先遍历根节点，再遍历左子树，再遍历右子树
+     * <p>对于左子树：先遍历左子树根节点，再遍历左子树的左子树，再遍历左子树的右子树。。。。
+     * <p>建议画图走流程
      */
     public void preorderTraversal() {
         Node<E> node = root;
@@ -121,10 +131,10 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 中序遍历
-     * 先遍历左子树，再遍历根节点，再遍历右子树
-     * 遍历左子树，先遍历左子树的左子树，再遍历左子树的根节点，再遍历左子树的右子树 ....
-     * 对于二叉搜索树:中序遍历 各节点数据会从小到大，或者从大到小排序（由比较器比较规则控制）
+     * <p>中序遍历
+     * <p>先遍历左子树，再遍历根节点，再遍历右子树
+     * <p>遍历左子树，先遍历左子树的左子树，再遍历左子树的根节点，再遍历左子树的右子树 ....
+     * <p>对于二叉搜索树:中序遍历 各节点数据会从小到大，或者从大到小排序（由比较器比较规则控制）
      */
     public void inorderTraversal() {
         Node<E> node = root;
@@ -141,9 +151,9 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 后序遍历
-     * 先遍历左子树，再遍历右子树，最后遍历根节点
-     * 遍历左子树：先遍历左子树的左子树，再遍历左子树的右子树，再遍历左子树的根节点
+     * <p>后序遍历
+     * <p>先遍历左子树，再遍历右子树，最后遍历根节点
+     * <p>遍历左子树：先遍历左子树的左子树，再遍历左子树的右子树，再遍历左子树的根节点
      */
     public void postorderTraversal() {
         Node<E> node = root;
@@ -160,9 +170,9 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 层序遍历
-     * 从根节点开始从上向下，从左向右一层一层的遍历
-     * 遍历过程类似队列入队出队，使用队列实现
+     * <p>层序遍历
+     * <p>从根节点开始从上向下，从左向右一层一层的遍历
+     * <p>遍历过程类似队列入队出队，使用队列实现
      */
     public void levelOrderTraversal() {
         Node<E> node = root;
@@ -183,9 +193,9 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 遍历增强
-     * 以上四种遍历,执行的都是sout打印，对于调用方来说，有时候需要定制化打印，那么如何实现呢？
-     * 方法增加接口/抽象类，完成功能扩展
+     * <p>遍历增强
+     * <p>以上四种遍历,执行的都是sout打印，对于调用方来说，有时候需要定制化打印，那么如何实现呢？
+     * <p>方法增加接口/抽象类，完成功能扩展
      */
     public static abstract class Visitor<E> {
         boolean stop;
@@ -194,7 +204,7 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 前序遍历增强
+     * <p>前序遍历增强
      */
     public void preorderTraversalExt(Visitor<E> visitor) {
         if (null == visitor) {
@@ -217,7 +227,7 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 中序遍历增强
+     * <p>中序遍历增强
      */
     public void inorderTraversalExt(Visitor<E> visitor) {
         if (null == visitor) {
@@ -243,7 +253,7 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 后序遍历增强
+     * <p>后序遍历增强
      */
     public void postorderTraversalExt(Visitor<E> visitor) {
         if (null == visitor) {
@@ -268,7 +278,7 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 层序遍历增强
+     * <p>层序遍历增强
      */
     public void levelOrderTraversalExt(Visitor<E> visitor) {
         if (null == visitor) {
@@ -293,7 +303,7 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 计算二叉树的高度
+     * <p>计算二叉树的高度
      */
     public int height() {
         if (root == null) return 0;
@@ -301,8 +311,8 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 计算 二叉树 任一 节点的高度
-     * 使用递归实现：画图归纳,任意节点高度=Math.max(左子节点高度，右子节点高度)+1
+     * <p>计算 二叉树 任一 节点的高度
+     * <p>使用递归实现：画图归纳,任意节点高度=Math.max(左子节点高度，右子节点高度)+1
      */
     private int height(Node<E> node) {
         // 一致向左递归或者向右递归，最后到达叶子节点的左右节点 ,不存在，返回0
@@ -312,8 +322,8 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 
 
     /**
-     * 层序遍历计算树高
-     * 归纳: 初始height=0,每一层完成出队,height++,关键在于每一层节点全部出队，下一层的levelSize=queue.size()
+     * <p>层序遍历计算树高
+     * <p>归纳: 初始height=0,每一层完成出队,height++,关键在于每一层节点全部出队，下一层的levelSize=queue.size()
      */
     public int height2() {
         //从根节点开始层序遍历
@@ -341,9 +351,9 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 判断一颗 二叉树 是否是 完全二叉树
-     * 完全二叉树 :节点的度可能是0,1,2 ，如果有度为1的节点只能有一个，且向左靠齐
-     * 需要遍历整个 二叉树 的每个节点,根据左右子节点是否为空进行区分
+     * <p>判断一颗 二叉树 是否是 完全二叉树
+     * <p>完全二叉树 :节点的度可能是0,1,2 ，如果有度为1的节点只能有一个，且向左靠齐
+     * <p>需要遍历整个 二叉树 的每个节点,根据左右子节点是否为空进行区分
      */
     public boolean isComplete() {
         if (root == null) return false;
@@ -375,15 +385,15 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 对于中序遍历的二叉树获取任意一个节点的前驱节点
-     * 测试数据
-     * 向 二叉树依次添加 8 4 13 2 6 10 1 3 5 7 9 12 11
-     * 先观察具有左右子树的节点，找其前驱节点
-     * 再观察只具有左子树的节点，找其前驱节点
-     * 再观察只有右子树的节点找其前驱节点
-     * 再观察叶子节点找其前驱节点
-     * 再观察根节点找其前驱节点
-     * 归纳规律，同一代码
+     * <p>对于中序遍历的二叉树获取任意一个节点的前驱节点
+     * <p>测试数据
+     * <p>向 二叉树依次添加 8 4 13 2 6 10 1 3 5 7 9 12 11
+     * <p>先观察具有左右子树的节点，找其前驱节点
+     * <p>再观察只具有左子树的节点，找其前驱节点
+     * <p>再观察只有右子树的节点找其前驱节点
+     * <p>再观察叶子节点找其前驱节点
+     * <p>再观察根节点找其前驱节点
+     * <p>归纳规律，同一代码
      */
     public Node<E> precursorNode(Node<E> node) {
         if (node == null) return null;
@@ -409,7 +419,7 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 
 
     /**
-     * 根据元素返回节点
+     * <p>根据元素返回节点
      */
     public Node<E> node(E element) {
         Node<E> node = root;
@@ -428,9 +438,9 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
 
 
     /**
-     * 获取任意一个节点的后继节点
-     * 测试数据
-     * 向 二叉树依次添加 4 1 8 2 7 10 3 5 9 11
+     * <p>获取任意一个节点的后继节点
+     * <p>测试数据
+     * <p>向 二叉树依次添加 4 1 8 2 7 10 3 5 9 11
      */
     public Node<E> successorNode(Node<E> node) {
         Node<E> right = node.right;
@@ -452,7 +462,69 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 根据四种遍历实现 toString打印
+     * 根据指定值删除任意节点
+     */
+    public void remove(E e) {
+        this.remove(node(e));
+    }
+
+    /**
+     * <p>删除指定节点:
+     * <p>以remove.txt中的二叉树为例
+     * <p>删除度==2的节点,要使用其前驱或者后继节点替换其位置,以删除节点4为例
+     * <p>删除度==1的节点,比如删除节点11 要区分是parent的左子节点还是右子节点，parent.left=node.left node.left.parent=node.parent
+     * <p>删除度==0的节点:即删除叶子节点 要区分是parent的左叶子还是右叶子，分别设置parent.left=null,parent.right=null
+     */
+    public void remove(Node<E> node) {
+        if (node == null) return;
+        if (node.hasTwoChild()) {
+            // 删除度==2的节点
+            // 以删除节点4为例,4的后继节点是5
+            // 一个节点的后继节点度==0或者度==1，只有这两种可能
+            // 使用其后继节点替换要被删除节点元素值
+            Node<E> preNode = this.successorNode(node);
+            node.element = preNode.element;// 直接替换
+            //接下来删除后继节点就行了，而后继节点的度要么0要么1
+            node = preNode;
+        }
+        // 删除度==0或者度==1 的节点
+        // 1.找到替换被删除节点的子节点
+        Node<E> replace = node.left != null ? node.left : node.right;
+        // 对于度==1 replace!=null,而度==0的叶子节点replace==null
+        if (replace != null) {
+            //删除度==1的节点
+            if (node.parent != null) {
+                replace.parent = node.parent;
+                if (node == node.parent.left) {
+                    node.parent.left = replace;
+                } else {
+                    node.parent.right = replace;
+                }
+            } else {
+                // 比如 9 11 12 这种链表式二叉树
+                root = replace;
+                replace.parent = null;
+            }
+        } else {
+            if (node.parent != null) {
+                //删除度==0的叶子节点
+                //if (node.parent.left != null) {
+                if (node == node.parent.left) {
+                    // 删除左叶子
+                    node.parent.left = null;
+                } else {
+                    // 删除右叶子
+                    node.parent.right = null;
+                }
+            } else {
+                root = null;
+            }
+        }
+        size--;
+    }
+
+    /**
+     * <p> 根据四种遍历实现 toString打印
      */
     @Override
     public String toString() {
@@ -465,7 +537,7 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 前序遍历打印
+     * <p> 前序遍历打印
      */
     private void preorderTraversalToString(Node<E> node, StringBuilder sb, String prefix) {
         if (node == null) {
@@ -479,7 +551,7 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 中序遍历打印
+     * <p> 中序遍历打印
      */
     private void inorderTraversalToString(Node<E> node, StringBuilder sb, String prefix) {
         if (node == null) {
@@ -491,7 +563,7 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     }
 
     /**
-     * 后序遍历打印
+     * <p> 后序遍历打印
      */
     private void postorderTraversalToString(Node<E> node, StringBuilder sb, String prefix) {
         if (node == null) {
