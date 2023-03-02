@@ -378,6 +378,12 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
      * 对于中序遍历的二叉树获取任意一个节点的前驱节点
      * 测试数据
      * 向 二叉树依次添加 8 4 13 2 6 10 1 3 5 7 9 12 11
+     * 先观察具有左右子树的节点，找其前驱节点
+     * 再观察只具有左子树的节点，找其前驱节点
+     * 再观察只有右子树的节点找其前驱节点
+     * 再观察叶子节点找其前驱节点
+     * 再观察根节点找其前驱节点
+     * 归纳规律，同一代码
      */
     public Node<E> precursorNode(Node<E> node) {
         if (node == null) return null;
@@ -424,11 +430,25 @@ public class BinarySearchTree<E> implements BinaryTreeInfo {
     /**
      * 获取任意一个节点的后继节点
      * 测试数据
-     * 向 二叉树依次添加 4 1 8 2 7 10 3 5 9  11
+     * 向 二叉树依次添加 4 1 8 2 7 10 3 5 9 11
      */
     public Node<E> successorNode(Node<E> node) {
-
-        return null;
+        Node<E> right = node.right;
+        if (right != null) {
+            // 节点 8的后继节点为9
+            while (right.left != null) {
+                right = right.left;
+            }
+            return right;
+        }
+        // 执行到这里,说明该节点无右子节点
+        // 比如节点3 的后继节点是 4  3.parent.parent.parent... =4.left  终止
+        while (node.parent != null && node == node.parent.right) {
+            node = node.parent;
+        }
+        // 对于根节点 ，他的后继节点是右子树最小的节点
+        // 对于节点11 ，11.parent.parent..一直到parent==null终止,他的后继节点为null
+        return node.parent;
     }
 
     /**

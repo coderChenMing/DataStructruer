@@ -1,6 +1,7 @@
 package com.learn;
 
 import com.learn.BinarySearchTree.Visitor;
+import com.learn.file.Files;
 import com.learn.printer.BinaryTrees;
 
 public class BinarySearchTreeTest {
@@ -33,7 +34,8 @@ public class BinarySearchTreeTest {
         // test7();
         // test8();
         // test9();
-         test10();
+        // test10();
+        test11();
     }
 
     public static void test1() {
@@ -224,8 +226,8 @@ public class BinarySearchTreeTest {
         bst.add(12);
         bst.add(11);
 
-        BinaryTrees.println(bst);
-
+        String printString = BinaryTrees.printString(bst);
+        Files.writeToFile("e:\\qianqu.text",printString);
         System.out.println("1的前驱节点: "+bst.precursorNode(bst.node(1)));
         System.out.println("3的前驱节点: "+bst.precursorNode(bst.node(3)).element);
         System.out.println("9的前驱节点: "+bst.precursorNode(bst.node(9)).element);
@@ -244,10 +246,13 @@ public class BinarySearchTreeTest {
         bst.add(5);
         bst.add(9);
         bst.add(11);
-        BinaryTrees.println(bst);
+        String printString = BinaryTrees.printString(bst);
+        System.out.println(printString);
+        //Files.writeToFile("e:\\houji.text",printString);
 
-        System.out.println("1的后继节点: "+bst.precursorNode(bst.node(1)));
-        System.out.println("3的后继节点: "+bst.precursorNode(bst.node(3)).element);
-        System.out.println("9的后继节点: "+bst.precursorNode(bst.node(9)).element);
+        System.out.println("11的后继节点: "+bst.successorNode(bst.node(11)));
+        System.out.println("3的后继节点: "+bst.successorNode(bst.node(3)).element);
+        System.out.println("8的后继节点: "+bst.successorNode(bst.node(8)).element);
+        System.out.println("9的后继节点: "+bst.successorNode(bst.node(9)).element);
     }
 }
