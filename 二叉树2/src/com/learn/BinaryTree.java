@@ -9,7 +9,7 @@ public class BinaryTree<E> implements BinaryTreeInfo {
     protected int size;
     protected Node<E> root;
 
-    public static class Node<E> {
+    protected static class Node<E> {
         E element;
         Node<E> parent;
         Node<E> left;
@@ -244,7 +244,7 @@ public class BinaryTree<E> implements BinaryTreeInfo {
      */
     private int height(Node<E> node) {
         // 一致向左递归或者向右递归，最后到达叶子节点的左右节点 ,不存在，返回0
-        if (node == null) return 0;
+        if (node == null) return 0;//递归出口
         return 1 + Math.max(height(node.left), height(node.right));
     }
 

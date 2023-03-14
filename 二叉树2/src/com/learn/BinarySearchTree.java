@@ -15,10 +15,10 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
     // 使用BinarySearchTree<E extends Comparable<E>> 方式，第三方调用必须保证添加的元素实现Comparable接口，不太友好
     // 可以增加比较器，由第三方确定比较规则，这样可以比较灵活调用
 
-    private Comparator<E> comparator;
+    protected Comparator<E> comparator;
 
     public BinarySearchTree() {
-
+        this(null);
     }
 
     public BinarySearchTree(Comparator<E> comparator) {
@@ -39,8 +39,10 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
         checkElement(element);
         // 添加根节点
         if (root == null) {
-            root = new Node<E>(element, null);
+            root = createNode(element, null);
             size++;
+            // 对二叉树进行平衡
+            afterAdd(root);
             return;
         }
         // 添加其他节点
@@ -60,13 +62,21 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
                 return;
             }
         }
-        Node<E> newNode = new Node<>(element, parent);
+        Node<E> newNode = createNode(element, parent);
         if (result > 0) {
             parent.right = newNode;
         } else {
             parent.left = newNode;
         }
         size++;
+        afterAdd(newNode);
+    }
+
+    protected Node<E> createNode(E element, Node<E> parent) {
+        return new Node<E>(element, parent);
+    }
+    protected void afterAdd(Node<E> node) {
+        // 由子类重写,定义具体平衡内容
     }
 
     /**
