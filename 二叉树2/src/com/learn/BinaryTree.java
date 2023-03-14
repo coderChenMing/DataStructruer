@@ -30,6 +30,14 @@ public class BinaryTree<E> implements BinaryTreeInfo {
         public boolean hasTwoChild() {
             return left != null && right != null;
         }
+
+        public boolean isLeft() {
+            return parent != null && this == parent.left;
+        }
+
+        public boolean isRight() {
+            return parent != null && this == parent.right;
+        }
     }
 
 
@@ -390,7 +398,7 @@ public class BinaryTree<E> implements BinaryTreeInfo {
         //return ((BinarySearchTree.Node<E>) node).element;
         // 添加打印父节点元素
         Node<E> newNode = (Node<E>) node;
-        String parent = newNode.parent == null ? "null" : newNode.parent.element+"";
-        return newNode.element+"_p( "+parent+" )";
+        String parent = newNode.parent == null ? "null" : newNode.parent.element + "";
+        return newNode.element + "_p( " + parent + " )";
     }
 }
