@@ -8,10 +8,21 @@ public class AVLTreeTest {
     };
 
     public static void main(String[] args) {
-        test1();
+        //test1();
+        test2();
     }
 
     private static void test1() {
+        AVLTree<Integer> avl = new AVLTree<>();
+        for (int i = 0; i < data.length; i++) {
+            System.out.println(data[i]);
+            avl.add(data[i]);
+            BinaryTrees.println(avl);
+            System.out.println("---------------------------------------------------------------------------------------------------");
+        }
+    }
+
+    private static void test2() {
         AVLTree<Integer> avl = new AVLTree<>();
         for (int i = 0; i < data.length; i++) {
             System.out.println(data[i]);
