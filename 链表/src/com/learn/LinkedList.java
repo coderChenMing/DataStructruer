@@ -37,7 +37,7 @@ public class LinkedList<E> extends AbstractList<E> {
     private Node<E> node(int index) {
         check4Index(index);
         // 双向链表，可以根据索引位置选择循环方向
-        if (index < (size >> 2)) {
+        if (index < (size >> 1)) {
             // 从first开始寻找
             Node<E> node = first;
             for (int i = 0; i < index; i++) {
