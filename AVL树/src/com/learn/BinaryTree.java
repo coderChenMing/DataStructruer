@@ -397,8 +397,9 @@ public class BinaryTree<E> implements BinaryTreeInfo {
     public Object string(Object node) {
         //return ((BinarySearchTree.Node<E>) node).element;
         // 添加打印父节点元素
-        Node<E> newNode = (Node<E>) node;
+       /* Node<E> newNode = (Node<E>) node;
         String parent = newNode.parent == null ? "null" : newNode.parent.element + "";
-        return newNode.element + "_p( " + parent + " )";
+        return newNode.element + "_p( " + parent + " )";*/
+        return node;//由AVLTree和RBTree的节点重写toString方法决定
     }
 }
