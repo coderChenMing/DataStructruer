@@ -1,4 +1,4 @@
-package com.learn;
+package com.learn.bt;
 
 import java.util.Comparator;
 
@@ -8,7 +8,7 @@ import java.util.Comparator;
  * 平衡二叉搜索树是二叉搜索树的一种
  * 平衡时机:二叉搜索树完成添加节点之后
  */
-public class AVLTree<E> extends BinarySearchTree<E> {
+public class AVLTree<E> extends BalanceBinarySearchTree<E> {
 
     public AVLTree() {
         this(null);
@@ -155,38 +155,13 @@ public class AVLTree<E> extends BinarySearchTree<E> {
 
     /**
      * 向右旋转:示例如下
-     *          G
-     *      P
+     * G
+     * P
      * N
      */
-    private void rotateRight(Node<E> grand) {
-        //由于确定向右旋转,G P N 的关系已经确定
-        Node<E> parent = grand.left;
-        Node<E> child = parent.right;
-        Node<E> node = parent.left;
-
-        // 1.更新 G P节点间关系
-        grand.left = child;
-        parent.right = grand;
-
-        // 2.更新G P及P的原right子节点的parent
-        // 2.1 原G.parent作为P.parent
-        parent.parent = grand.parent;
-        if (grand.isLeft()) {
-            grand.parent.left = parent;
-        } else if (grand.isRight()) {
-            grand.parent.right = parent;
-        } else {
-            //grand为根节点.grand.parent==null
-            root = parent;
-        }
-        // 2.2更新原P.child.parent
-        if (null != child) {
-            child.parent = grand;
-        }
-        // 2.3更新G.parent
-        grand.parent = parent;
-        // 3.更新高度:先更新G的高度,再更新P的高度
+    @Override
+    protected void afterRotate(Node<E> grand, Node<E> parent, Node<E> child) {
+        super.rotateRight(grand);
         updateHeight(grand);
         updateHeight(parent);
 
@@ -195,8 +170,8 @@ public class AVLTree<E> extends BinarySearchTree<E> {
     /**
      * 向左旋转:示例如下
      * G
-     *      P
-     *          N
+     * P
+     * N
      */
     private void rotateLeft(Node<E> grand) {
         //由于确定向右旋转,G P N 的关系已经确定
@@ -239,10 +214,10 @@ public class AVLTree<E> extends BinarySearchTree<E> {
 
     @Override
     protected void afterRemove(Node<E> node) {
-        while ((node=node.parent) != null) {
+        while ((node = node.parent) != null) {
             if (isBalance(node)) {
                 updateHeight(node);
-            }else {
+            } else {
                 reBalanceNew(node);
             }
         }

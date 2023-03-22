@@ -75,6 +75,7 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
     protected Node<E> createNode(E element, Node<E> parent) {
         return new Node<E>(element, parent);
     }
+
     protected void afterAdd(Node<E> node) {
         // 由子类重写,定义具体平衡内容
     }
@@ -154,6 +155,7 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
                 } else {
                     node.parent.right = replace;
                 }
+                afterRemove(node);
             } else {
                 // 比如 9 11 12 这种链表式二叉树
                 root = replace;
@@ -170,11 +172,17 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
                     // 删除右叶子
                     node.parent.right = null;
                 }
+                afterRemove(node);
             } else {
                 root = null;
+                //afterRemove(root);
             }
         }
         size--;
+    }
+
+    protected void afterRemove(Node<E> node) {
+
     }
 
     /**

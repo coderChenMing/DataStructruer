@@ -75,8 +75,13 @@ public class BinarySearchTree<E> extends BinaryTree<E> {
     protected Node<E> createNode(E element, Node<E> parent) {
         return new Node<E>(element, parent);
     }
+
     protected void afterAdd(Node<E> node) {
         // 由子类重写,定义具体平衡内容
+    }
+
+    protected void afterRemove(Node<E> node) {
+
     }
 
     /**

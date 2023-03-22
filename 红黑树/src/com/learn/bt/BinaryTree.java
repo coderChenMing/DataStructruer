@@ -38,6 +38,20 @@ public class BinaryTree<E> implements BinaryTreeInfo {
         public boolean isRight() {
             return parent != null && this == parent.right;
         }
+
+        public Node<E> sibling() {
+            if (isLeft()) {
+                if (parent != null) {
+                    return parent.right;
+                }
+            }
+            if (isRight()) {
+                if (parent != null) {
+                    return parent.left;
+                }
+            }
+            return null;
+        }
     }
 
 
