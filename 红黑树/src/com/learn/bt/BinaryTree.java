@@ -41,14 +41,10 @@ public class BinaryTree<E> implements BinaryTreeInfo {
 
         public Node<E> sibling() {
             if (isLeft()) {
-                if (parent != null) {
-                    return parent.right;
-                }
+                return parent.right;
             }
             if (isRight()) {
-                if (parent != null) {
-                    return parent.left;
-                }
+                return parent.left;
             }
             return null;
         }

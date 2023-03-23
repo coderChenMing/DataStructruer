@@ -173,7 +173,8 @@ public class AVLTree<E> extends BalanceBinarySearchTree<E> {
      * P
      * N
      */
-    private void rotateLeft(Node<E> grand) {
+    @Override
+    protected void rotateLeft(Node<E> grand) {
         //由于确定向右旋转,G P N 的关系已经确定
         Node<E> parent = grand.right;
         Node<E> child = parent.left;
