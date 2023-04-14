@@ -19,8 +19,9 @@ public interface Heap<E> {
 
     /**
      * 删除堆顶元素
+     * 先用最后一个元素替换堆顶,新的堆顶元素再进行下滤
      */
-    void remove();
+    E remove();
 
     /**
      * 替换堆顶元素

@@ -95,7 +95,7 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
         // 要上滤的元素
         E now = elements[index];
         while (index > 0) {// 一直上滤到堆顶
-            // 获取父节点索引
+            // 获取父节点索引: (index-1)/2
             int parentIndex = (index - 1) >> 1;
             E parent = elements[parentIndex];
             if (compare(now, parent) <= 0) break;
@@ -114,9 +114,72 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
     }
 
     @Override
-    public void remove() {
-
+    public E remove() {
+        emptyCheck();
+        E top = elements[0];
+        elements[0] = elements[size - 1];
+        elements[size - 1] = null;// 删除最后一个元素
+        size--;
+        // 堆顶下滤
+        siftDown(0);
+        return top;
     }
+
+    private void siftDown(int index) {
+        E now = elements[index];
+        // 必须保证index位置是非叶子节点才能下滤,叶子节点下滤有什么意义
+        // 第一个叶子节点索引 = 非叶子节点数量
+        // index < 第一个叶子节点索引
+        while (index < (size >> 1)) {
+            // 获取左右子节点
+            int left = (index << 1) + 1;
+            E leftE = elements[left];
+            int right = left + 1;
+            E rightE = elements[right];
+            if (right < size && compare(rightE, leftE) > 0) {
+                left = right;
+                leftE = rightE;
+            }
+            // 比较当前元素与左右子节点中比较大的一个
+            if (compare(now, leftE) >= 0) break;
+            elements[index] = leftE;
+            index = left;
+        }
+        elements[index] = now;
+    }
+
+    /*private void siftDown(int index) {
+        E element = elements[index];
+        int half = size >> 1;
+        // 第一个叶子节点的索引 == 非叶子节点的数量
+        // index < 第一个叶子节点的索引
+        // 必须保证index位置是非叶子节点
+        while (index < half) {
+            // index的节点有2种情况
+            // 1.只有左子节点
+            // 2.同时有左右子节点
+
+            // 默认为左子节点跟它进行比较
+            int childIndex = (index << 1) + 1;
+            E child = elements[childIndex];
+
+            // 右子节点
+            int rightIndex = childIndex + 1;
+
+            // 选出左右子节点最大的那个
+            if (rightIndex < size && compare(elements[rightIndex], child) > 0) {
+                child = elements[childIndex = rightIndex];
+            }
+
+            if (compare(element, child) >= 0) break;
+
+            // 将子节点存放到index位置
+            elements[index] = child;
+            // 重新设置index
+            index = childIndex;
+        }
+        elements[index] = element;
+    }*/
 
     @Override
     public E replace(E e) {
