@@ -89,6 +89,7 @@ public class LinkedList<E> extends AbstractList<E> {
         check4Index(index);
         // 先处理一般节点，后处理临界节点
         Node<E> oldNode = node(index);
+        E oldEle = oldNode.element;
         Node<E> prev = oldNode.prev;
         Node<E> next = oldNode.next;
         if (prev == null) {
@@ -96,15 +97,18 @@ public class LinkedList<E> extends AbstractList<E> {
             first = next;
         } else {
             prev.next = next;
+            oldNode.prev = null;//防止内存泄露
         }
         if (next == null) {
             // 删除尾节点
             last = prev;
         } else {
             next.prev = prev;
+            oldNode.next = null;//防止内存泄露
         }
+        oldNode.element = null;//防止内存泄露
         size--;
-        return oldNode.element;
+        return oldEle;
     }
 
     @Override
