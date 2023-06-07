@@ -9,8 +9,31 @@ public class Main {
         //oneLoop(array);
         //multiLoop(array);
         //existSort(array);
-        rememberLastExchange(array);
+        //rememberLastExchange(array);
+        selectionSort(array);
         System.out.println(Arrays.toString(array));
+    }
+
+    /*
+    选择排序:
+    默认数组首个元素是最大,然后每次循环,都拿首个元素从头到尾进行比较,找到最大元素,和末尾元素进行交换
+    * */
+    public static void selectionSort(int[] array) {
+        for (int end = array.length - 1; end > 0; end--) {
+            int maxIndex = 0;
+            for (int begin = 0; begin < end; begin++) {
+                //if (array[maxIndex] < array[begin]) {
+                // 为了保持排序的稳定性:对于相等元素的处理,排序之后依然保持排序之前相等元素的相对位置
+                // 对于array[maxIndex] < array[begin] eg: 10 10 1 3 排序后: 3 10 1 10,显然两个10位置变了
+                if (array[maxIndex] < array[begin]) {
+                    maxIndex = begin;// 最大元素索引
+                }
+            }
+            // 没循环一次交换一次
+            int temp = array[maxIndex];
+            array[maxIndex] = array[end];//end以1进行递减,满足每次交换都交换(上次交换得到最大元素的上一个元素)与之交换
+            array[end] = temp;
+        }
     }
 
     public static void rememberLastExchange(int[] array) {
