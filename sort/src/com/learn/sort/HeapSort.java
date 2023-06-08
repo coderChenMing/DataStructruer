@@ -7,14 +7,13 @@ public class HeapSort extends Sort {
     protected void sort() {
         // 原地建堆
         heapSize = array.length;
+        // 自下而上的下滤进行原地建堆
         for (int i = (heapSize >> 1) - 1; i >= 0; i--) {
             siftDown(i);
         }
-
         while (heapSize > 1) {
             // 交换堆顶元素和尾部元素
             swap(0, --heapSize);
-
             // 对0位置进行siftDown（恢复堆的性质）
             siftDown(0);
         }
