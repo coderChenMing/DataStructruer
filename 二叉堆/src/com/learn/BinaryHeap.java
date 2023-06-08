@@ -1,6 +1,7 @@
 package com.learn;
 
 import com.learn.printer.BinaryTreeInfo;
+import com.learn.printer.BinaryTrees;
 
 import java.util.Comparator;
 
@@ -11,13 +12,54 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
     private static final int DefaultCapacity = 10;
 
     public BinaryHeap(Comparator<E> comparator) {
-        super(comparator);
-        elements = (E[]) new Object[DefaultCapacity];
+        this(null, comparator);
+    }
 
+    public BinaryHeap(E[] elements) {
+        this(elements, null);
     }
 
     public BinaryHeap() {
-        this(null);
+        this(null,null);
+    }
+
+    public BinaryHeap(E[] elements, Comparator<E> comparator) {
+        super(comparator);
+        if (elements == null || elements.length == 0) {
+            this.elements = (E[]) new Object[DefaultCapacity];// 泛型不能直接new E[]
+        }else {
+            int capacity = Math.max(DefaultCapacity, elements.length);
+            this.elements = (E[]) new Object[capacity];// 泛型不能直接new E[]
+            System.arraycopy(elements, 0, this.elements, 0, elements.length);
+            size = elements.length;
+            //原地建堆
+            heapiFy();
+        }
+    }
+
+    private void heapiFy() {
+        //自上而下的上滤,从数组索引1开始，索引0无意义
+        /*for (int i = 1; i < elements.length ; i++) {
+            siftUp(i);
+        }*/
+        // 自下而上的下滤，从最后一个非叶子节点开始下滤
+        for (int i = (size >> 1) - 1; i >= 0; i--) {
+            //i必须>=0 ，等于0表示堆顶元素也要下滤
+            siftDown(i);
+        }
+        // 注意:自上而下的下滤,自下而上的上滤,无法形成大顶堆或者小顶堆结构,分析执行过程即可判断
+    }
+
+    public static void main(String[] args) {
+        Integer[] array = {10, 20, 5, 30, 16, 40};
+        BinaryHeap<Integer> binaryHeap = new BinaryHeap<>(array, new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1-o2;
+            }
+        });
+        BinaryTrees.print(binaryHeap);
+
     }
 
     @Override
@@ -122,7 +164,7 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
     public E remove() {
         emptyCheck();
         E top = elements[0];
-        int last=--size;
+        int last = --size;
        /* elements[0] = elements[size - 1];
         elements[size - 1] = null;// 删除最后一个元素
         size--;*/
@@ -198,7 +240,7 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
         if (size == 0) {
             elements[0] = e;
             size++;
-        }else {
+        } else {
             root = elements[0];
             elements[0] = e;
             siftDown(0);
