@@ -10,6 +10,11 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
 
     private static final int DefaultCapacity = 10;
 
+    public BinaryHeap(Comparator<E> comparator) {
+        super(comparator);
+        elements = (E[]) new Object[DefaultCapacity];
+
+    }
 
     public BinaryHeap() {
         this(null);
@@ -67,7 +72,7 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
     private void siftUp(int index) {
         // 要上滤的元素
         //E e = elements[index];
-        while (index > 0) {// 一直上滤到堆顶
+        while (index > 0) {// 必须有父节点才能进行上滤,索引index要>0一直上滤到堆顶
             // 获取父节点索引
             int parentIndex = (index - 1) >> 1;
             if (compare(elements[index], elements[parentIndex]) <= 0) return;
@@ -117,9 +122,12 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
     public E remove() {
         emptyCheck();
         E top = elements[0];
-        elements[0] = elements[size - 1];
+        int last=--size;
+       /* elements[0] = elements[size - 1];
         elements[size - 1] = null;// 删除最后一个元素
-        size--;
+        size--;*/
+        elements[0] = elements[last];
+        elements[last] = null;// 删除最后一个元素
         // 堆顶下滤
         siftDown(0);
         return top;
@@ -130,12 +138,14 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
         // 必须保证index位置是非叶子节点才能下滤,叶子节点下滤有什么意义
         // 第一个叶子节点索引 = 非叶子节点数量
         // index < 第一个叶子节点索引
-        while (index < (size >> 1)) {
+        while (index < (size >> 1)) {// index 必须有子节点才能下滤,即index必须是非叶子节点的索引 ,即index<非叶子节点数量
             // 获取左右子节点
+            // 完全二叉树非叶子节点:1.只有左子节点,2有左右子节点
             int left = (index << 1) + 1;
             E leftE = elements[left];
             int right = left + 1;
             E rightE = elements[right];
+            // 如果右子节点存在且大于左子节点则右子节点替换左子节点
             if (right < size && compare(rightE, leftE) > 0) {
                 left = right;
                 leftE = rightE;
@@ -183,15 +193,18 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
 
     @Override
     public E replace(E e) {
-        return null;
+        elementCheck(e);
+        E root = null;
+        if (size == 0) {
+            elements[0] = e;
+            size++;
+        }else {
+            root = elements[0];
+            elements[0] = e;
+            siftDown(0);
+        }
+        return root;
     }
-
-    public BinaryHeap(Comparator<E> comparator) {
-        super(comparator);
-        elements = (E[]) new Object[DefaultCapacity];
-
-    }
-
 
     @Override
     public Object root() {
