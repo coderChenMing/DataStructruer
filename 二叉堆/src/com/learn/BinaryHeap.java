@@ -1,9 +1,9 @@
 package com.learn;
 
 import com.learn.printer.BinaryTreeInfo;
-import com.learn.printer.BinaryTrees;
+import com.learn.tools.Integers;
 
-import java.util.Comparator;
+import java.util.*;
 
 public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
 
@@ -20,14 +20,14 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
     }
 
     public BinaryHeap() {
-        this(null,null);
+        this(null, null);
     }
 
     public BinaryHeap(E[] elements, Comparator<E> comparator) {
         super(comparator);
         if (elements == null || elements.length == 0) {
             this.elements = (E[]) new Object[DefaultCapacity];// 泛型不能直接new E[]
-        }else {
+        } else {
             int capacity = Math.max(DefaultCapacity, elements.length);
             this.elements = (E[]) new Object[capacity];// 泛型不能直接new E[]
             System.arraycopy(elements, 0, this.elements, 0, elements.length);
@@ -51,14 +51,29 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
     }
 
     public static void main(String[] args) {
-        Integer[] array = {10, 20, 5, 30, 16, 40};
+        /*Integer[] array = Integers.random(10,1,100);
+        Integers.println(array);
         BinaryHeap<Integer> binaryHeap = new BinaryHeap<>(array, new Comparator<Integer>() {
             @Override
             public int compare(Integer o1, Integer o2) {
-                return o1-o2;
+                return o1 - o2;
             }
         });
         BinaryTrees.print(binaryHeap);
+        System.out.println();*/
+
+        Integer[] array2 = Integers.random(10, 1, 100);
+        Integers.println(array2);
+        BinaryHeap<Integer> binaryHeap2 = new BinaryHeap<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o2 - o1;//小顶堆
+            }
+            // 1.上滤和下滤，元素数值大的在顶部.的条件是当前索引元素>二叉堆中元素,进行交换即 o1>o2时进行交换,最终堆顶是最大元素，即大顶堆
+            // 比较器更换位置 o2 - o1 ,按照1 此时当前元素小的向上交换
+        });
+        List<Integer> topList = binaryHeap2.topKSelf(array2, 5);
+        System.out.println(topList);
 
     }
 
@@ -186,9 +201,9 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
             int left = (index << 1) + 1;
             E leftE = elements[left];
             int right = left + 1;
-            E rightE = elements[right];
             // 如果右子节点存在且大于左子节点则右子节点替换左子节点
-            if (right < size && compare(rightE, leftE) > 0) {
+            if (right < size && compare(elements[right], leftE) > 0) {
+                E rightE = elements[right];
                 left = right;
                 leftE = rightE;
             }
@@ -246,6 +261,57 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
             siftDown(0);
         }
         return root;
+    }
+
+    /*
+     * topk问题使用优先级队列
+     */
+    public static List<Integer> topK(Integer[] array, int k) {
+        List<Integer> topkList = new ArrayList<>();
+        if (k < 1 || k > array.length) {
+            return topkList;
+        }
+        // 使用完全二叉树逻辑实现的优先级队列
+        Queue<Integer> queue = new PriorityQueue<>();
+
+        for (int i = 0; i < array.length; i++) {
+            if (queue.size() < k) {
+                queue.add(array[i]);
+            } else {
+                if (queue.peek() < array[i]) {//堆顶元素小于数组中元素，则替换堆顶元素
+                    queue.poll();
+                    queue.add(array[i]);
+                }
+            }
+        }
+      /*  while (k-- > 0) {
+            topkList.add(queue.poll());
+        }*/
+        while (!queue.isEmpty()) {
+            topkList.add(queue.poll());
+        }
+        return topkList;
+    }
+
+    public List<E> topKSelf(E[] array, int k) {
+        List<E> topkList = new ArrayList<>();
+        if (k < 1 || k > array.length) {
+            return topkList;
+        }
+        for (int num = 0; num < array.length; num++) {
+            if (size < k) {
+                add(array[num]);
+            } else {
+                if (compare(array[num], get()) < 0) {
+                    // 满足 get()- array[num]<0 ,即当前元素比堆顶大
+                    replace(array[num]);
+                }
+            }
+        }
+        while (!isEmpty()) {
+            topkList.add(remove());
+        }
+        return topkList;
     }
 
     @Override
