@@ -1,8 +1,8 @@
 package com.learn.sort;
 
 public class BubbleSort extends Sort {
-    public BubbleSort(Integer[] array) {
-        this.array = array;
+    public BubbleSort() {
+
     }
 
     @Override

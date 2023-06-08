@@ -1,8 +1,9 @@
 package com.learn.sort;
 
 import java.text.DecimalFormat;
+import java.util.Comparator;
 
-public abstract class Sort {
+public abstract class Sort implements Comparable<Sort> {
     protected Integer[] array;
     private int cmpCount;
     private int swapCount;
@@ -18,7 +19,13 @@ public abstract class Sort {
         sort();
         time = System.currentTimeMillis() - begin;
     }
-
+    @Override
+    public int compareTo(Sort o){
+        int result = (int) (time - o.time);
+        if(result!=0) result = cmpCount - o.cmpCount;
+        if(result!=0) result = swapCount - o.swapCount;
+        return result;
+    }
     protected abstract void sort();
 
     protected int cmp(int i1, int i2) {

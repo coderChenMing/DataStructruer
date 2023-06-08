@@ -3,17 +3,25 @@ package com.learn.sort;
 import com.learn.tools.Integers;
 import com.learn.tools.Times;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
 public class Main {
     public static void main(String[] args) {
-        Integer[] array = Integers.random(10000, 1, 20000);
+        Integer[] array = Integers.random(1000, 1, 2000);
         //test1(array);
-        testSorts(array, new HeapSort(), new SelectionSort(), new BubbleSort3());
+        testSorts(array,new BubbleSort(),new BubbleSort2(), new HeapSort(), new SelectionSort(), new BubbleSort3());
     }
 
     public static void testSorts(Integer[] array, Sort... sorts) {
         for (Sort sort : sorts) {
             sort.sort(Integers.copy(array));
+        }
+        Arrays.sort(sorts);
+
+        for (Sort sort : sorts) {
             System.out.println(sort);
+
         }
     }
 

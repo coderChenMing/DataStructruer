@@ -1,5 +1,10 @@
 package com.learn.sort;
 
+/**
+ * 堆排序是对选择排序的优化
+ * 时间复杂度:n(原地建堆)+nlog(n)(循环执行操作)
+ * 空间复杂度o(1),不是稳定排序,属于in place 排序
+ */
 public class HeapSort extends Sort {
     private int heapSize;
 

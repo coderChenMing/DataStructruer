@@ -38,11 +38,11 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
     }
 
     private void heapiFy() {
-        //自上而下的上滤,从数组索引1开始，索引0无意义
+        //自上而下的上滤,从数组索引1开始，索引0无意义 时间复杂度o(nlog(n))
         /*for (int i = 1; i < elements.length ; i++) {
             siftUp(i);
         }*/
-        // 自下而上的下滤，从最后一个非叶子节点开始下滤
+        // 自下而上的下滤，从最后一个非叶子节点开始下滤,时间复杂度O(n)
         for (int i = (size >> 1) - 1; i >= 0; i--) {
             //i必须>=0 ，等于0表示堆顶元素也要下滤
             siftDown(i);
@@ -300,12 +300,10 @@ public class BinaryHeap<E> extends AbstractHeap<E> implements BinaryTreeInfo {
         }
         for (int num = 0; num < array.length; num++) {
             if (size < k) {
-                add(array[num]);
-            } else {
-                if (compare(array[num], get()) < 0) {
-                    // 满足 get()- array[num]<0 ,即当前元素比堆顶大
-                    replace(array[num]);
-                }
+                add(array[num]);//n(log(K))
+            } else if (compare(array[num], get()) < 0) {
+                // 满足 get()- array[num]<0 ,即当前元素比堆顶大
+                replace(array[num]);//n(log(K))
             }
         }
         while (!isEmpty()) {

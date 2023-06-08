@@ -1,5 +1,11 @@
 package com.learn.sort;
 
+/**
+ * 最好时间复杂度o(n)
+ * <p>
+ * 最坏时间复杂度o(n^2)
+ * 空间复杂度o(1) 稳定排序 in place
+ */
 public class BubbleSort3 extends Sort {
     @Override
     protected void sort() {

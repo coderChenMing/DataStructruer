@@ -1,11 +1,15 @@
 package com.learn.sort;
 
-public class SelectionSort extends Sort{
+/**
+ * 最好最坏时间复杂度都是o(n^2)
+ * 空间复杂度o(1),稳定排序,in place
+ **/
+public class SelectionSort extends Sort {
     @Override
     protected void sort() {
         /*for (int end = array.length - 1; end > 0; end--) {
             int maxIndex = 0;
-            for (int begin = 0; begin < end; begin++) {
+            for (int begin = 1; begin < end; begin++) {
                 //if (array[maxIndex] < array[begin]) {
                 // 为了保持排序的稳定性:对于相等元素的处理,排序之后依然保持排序之前相等元素的相对位置
                 // 对于array[maxIndex] < array[begin] eg: 10 10 1 3 排序后: 3 10 1 10,显然两个10位置变了
@@ -20,12 +24,12 @@ public class SelectionSort extends Sort{
         }*/
         for (int end = array.length - 1; end > 0; end--) {
             int maxIndex = 0;
-            for (int begin = 0; begin < end; begin++) {
+            for (int begin = 1; begin < end; begin++) {
                 if (cmp(maxIndex, begin) <= 0) {
                     maxIndex = begin;
                 }
             }
-           swap(maxIndex,end);
+            swap(maxIndex, end);
         }
     }
 }
