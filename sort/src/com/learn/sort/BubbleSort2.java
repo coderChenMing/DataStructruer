@@ -1,6 +1,17 @@
 package com.learn.sort;
 
-public class BubbleSort2 extends Sort {
+import java.util.Comparator;
+
+public class BubbleSort2<E extends Comparable<E>> extends Sort<E> {
+
+    public BubbleSort2() {
+        super();
+    }
+
+    public BubbleSort2(Comparator<E> comparator) {
+        super(comparator);
+    }
+
     @Override
     protected void sort() {
         /*// 如果数组完全有序,可以提前终止循环

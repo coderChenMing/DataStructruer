@@ -1,10 +1,20 @@
 package com.learn.sort;
 
+import java.util.Comparator;
+
 /**
  * 最好最坏时间复杂度都是o(n^2)
  * 空间复杂度o(1),稳定排序,in place
  **/
-public class SelectionSort extends Sort {
+public class SelectionSort<E extends Comparable<E>> extends Sort<E> {
+    public SelectionSort() {
+        super();
+    }
+
+    public SelectionSort(Comparator<E> comparator) {
+        super(comparator);
+    }
+
     @Override
     protected void sort() {
         /*for (int end = array.length - 1; end > 0; end--) {

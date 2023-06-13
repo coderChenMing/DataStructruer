@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         Integer[] array = Integers.random(1000, 1, 2000);
         //test1(array);
-        testSorts(array,new BubbleSort(),new BubbleSort2(), new HeapSort(), new SelectionSort(), new BubbleSort3());
+        testSorts(array, new InsertionSort(), new InsertionSort2(), new InsertionSort3(), new HeapSort(), new SelectionSort(), new BubbleSort3());
     }
 
     public static void testSorts(Integer[] array, Sort... sorts) {
@@ -18,10 +18,8 @@ public class Main {
             sort.sort(Integers.copy(array));
         }
         Arrays.sort(sorts);
-
         for (Sort sort : sorts) {
             System.out.println(sort);
-
         }
     }
 

@@ -1,8 +1,14 @@
 package com.learn.sort;
 
-public class BubbleSort extends Sort {
-    public BubbleSort() {
+import java.util.Comparator;
 
+public class BubbleSort<E extends Comparable<E>> extends Sort<E> {
+    public BubbleSort() {
+        super();
+    }
+
+    public BubbleSort(Comparator<E> comparator) {
+        super(comparator);
     }
 
     @Override

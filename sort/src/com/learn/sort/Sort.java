@@ -1,16 +1,27 @@
 package com.learn.sort;
 
+import java.awt.color.CMMException;
 import java.text.DecimalFormat;
 import java.util.Comparator;
 
-public abstract class Sort implements Comparable<Sort> {
-    protected Integer[] array;
+public abstract class Sort<E extends Comparable<E>> implements Comparable<Sort<E>> {
+    protected E[] array;
     private int cmpCount;
     private int swapCount;
     private long time;
     private DecimalFormat fmt = new DecimalFormat("#.00");
 
-    public void sort(Integer[] array) {
+    protected Comparator<E> comparator;
+
+    public Sort() {
+        this(null);
+    }
+
+    public Sort(Comparator<E> comparator) {
+        this.comparator = comparator;
+    }
+
+    public void sort(E[] array) {
         if (array == null || array.length < 2) {
             return;
         }
@@ -19,28 +30,35 @@ public abstract class Sort implements Comparable<Sort> {
         sort();
         time = System.currentTimeMillis() - begin;
     }
+
     @Override
-    public int compareTo(Sort o){
+    public int compareTo(Sort o) {
         int result = (int) (time - o.time);
-        if(result!=0) result = cmpCount - o.cmpCount;
-        if(result!=0) result = swapCount - o.swapCount;
+        if (result != 0) result = cmpCount - o.cmpCount;
+        if (result != 0) result = swapCount - o.swapCount;
         return result;
     }
+
     protected abstract void sort();
 
     protected int cmp(int i1, int i2) {
         cmpCount++;
-        return array[i1] - array[i2];
+        if (comparator != null) {
+            return comparator.compare(array[i1], array[i2]);
+        } else {
+            return array[i1].compareTo(array[i2]);
+        }
+
     }
 
-    protected int cmpElements(Integer i1, Integer i2) {
+    protected int cmpElements(E e1, E e2) {
         cmpCount++;
-        return i1 - i2;
+        return e1.compareTo(e2);
     }
 
     protected void swap(int i1, int i2) {
         swapCount++;
-        int temp = array[i1];
+        E temp = array[i1];
         array[i1] = array[i2];
         array[i2] = temp;
     }
@@ -58,6 +76,7 @@ public abstract class Sort implements Comparable<Sort> {
                 + "------------------------------------------------------------------";
 
     }
+
     private String numberString(int number) {
         if (number < 10000) return "" + number;
 

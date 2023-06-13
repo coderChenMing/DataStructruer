@@ -1,12 +1,22 @@
 package com.learn.sort;
 
+import java.util.Comparator;
+
 /**
  * 最好时间复杂度o(n)
  * <p>
  * 最坏时间复杂度o(n^2)
  * 空间复杂度o(1) 稳定排序 in place
  */
-public class BubbleSort3 extends Sort {
+public class BubbleSort3<E extends Comparable<E>> extends Sort<E> {
+    public BubbleSort3() {
+        super();
+    }
+
+    public BubbleSort3(Comparator<E> comparator) {
+        super(comparator);
+    }
+
     @Override
     protected void sort() {
         /*// 数组在经历多次交换之后，尾部元素越来越有序，可以通过记录最后一次交换位置来控制循环比较范围

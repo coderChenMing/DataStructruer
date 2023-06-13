@@ -1,12 +1,22 @@
 package com.learn.sort;
 
+import java.util.Comparator;
+
 /**
  * 堆排序是对选择排序的优化
- * 时间复杂度:n(原地建堆)+nlog(n)(循环执行操作)
+ * 时间复杂度:n(原地建堆)+nlog(n)(循环执行操作)= nlog(n)
  * 空间复杂度o(1),不是稳定排序,属于in place 排序
  */
-public class HeapSort extends Sort {
+public class HeapSort<E extends Comparable<E>> extends Sort<E> {
     private int heapSize;
+
+    public HeapSort() {
+        super();
+    }
+
+    public HeapSort(Comparator<E> comparator) {
+        super(comparator);
+    }
 
     @Override
     protected void sort() {
@@ -25,23 +35,23 @@ public class HeapSort extends Sort {
     }
 
     private void siftDown(int index) {
-        Integer element = array[index];
-
+        E element = array[index];
+        int original = index;
         int half = heapSize >> 1;
         while (index < half) { // index必须是非叶子节点
             // 默认是左边跟父节点比
             int childIndex = (index << 1) + 1;
-            Integer child = array[childIndex];
+            E child = array[childIndex];
 
             int rightIndex = childIndex + 1;
             // 右子节点比左子节点大
             if (rightIndex < heapSize &&
-                    cmpElements(array[rightIndex], child) > 0) {
+                    cmp(rightIndex, childIndex) > 0) {
                 child = array[childIndex = rightIndex];
             }
 
             // 大于等于子节点
-            if (cmpElements(element, child) >= 0) break;
+            if (cmp(original, childIndex) >= 0) break;
 
             array[index] = child;
             index = childIndex;
