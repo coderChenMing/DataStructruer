@@ -4,6 +4,8 @@ import java.util.Comparator;
 
 /**
  * 终极优化:对有序部分通过二分查找定位当前待插入元素要插入的位置
+ * 优化了比较次数
+ * 时间复杂度:o(n^2)
  */
 public class InsertionSort3<E extends Comparable<E>> extends Sort<E> {
     public InsertionSort3() {
